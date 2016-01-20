@@ -17,8 +17,6 @@ namespace Sample
             Console.WriteLine(artnet.BroadcastAddress.ToString());
             artnet.Open(IPAddress.Parse("10.10.80.48"), IPAddress.Parse("255.255.255.0"));
 
-            byte[] _dmxData = new byte[511];
-
             // Register a packet listener
             artnet.NewPacket += artnet_NewPacket;
             Console.ReadLine();
