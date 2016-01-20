@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArtNet.IO
 {
-    public class ArtNetRecieveData
+    public class ArtNetReceiveData
     {
         public byte[] buffer = new byte[1500];
         public int bufferSize = 1500;

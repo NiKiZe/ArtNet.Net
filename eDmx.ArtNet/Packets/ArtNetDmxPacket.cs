@@ -16,7 +16,7 @@ namespace ArtNet.Packets
         {
         }
 
-        public ArtNetDmxPacket(ArtNetRecieveData data)
+        public ArtNetDmxPacket(ArtNetReceiveData data)
             : base(data)
         {
 

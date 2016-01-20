@@ -18,7 +18,7 @@ namespace ArtNet.Packets
             Devices = new List<UId>();
         }
 
-        public ArtTodDataPacket(ArtNetRecieveData data)
+        public ArtTodDataPacket(ArtNetReceiveData data)
             : base(data)
         {
 

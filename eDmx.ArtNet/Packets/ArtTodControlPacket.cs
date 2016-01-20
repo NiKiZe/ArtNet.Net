@@ -15,7 +15,7 @@ namespace ArtNet.Packets
         {
         }
 
-        public ArtTodControlPacket(ArtNetRecieveData data)
+        public ArtTodControlPacket(ArtNetReceiveData data)
             : base(data)
         {
 

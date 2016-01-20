@@ -95,7 +95,7 @@ namespace ArtNet.Sockets
             try
             {
                 EndPoint localPort = new IPEndPoint(IPAddress.Any, Port);
-                ArtNetRecieveData recieveState = new ArtNetRecieveData();
+                ArtNetReceiveData recieveState = new ArtNetReceiveData();
                 BeginReceiveFrom(recieveState.buffer, 0, recieveState.bufferSize, SocketFlags.None, ref localPort, new AsyncCallback(OnRecieve), recieveState);
             }
             catch (Exception ex)
@@ -112,7 +112,7 @@ namespace ArtNet.Sockets
             {
                 try
                 {
-                    ArtNetRecieveData recieveState = (ArtNetRecieveData)(state.AsyncState);
+                    ArtNetReceiveData recieveState = (ArtNetReceiveData)(state.AsyncState);
 
                     if (recieveState != null)
                     {

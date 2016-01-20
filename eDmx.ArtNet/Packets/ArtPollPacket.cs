@@ -15,7 +15,7 @@ namespace ArtNet.Packets
         {
         }
 
-        public ArtPollPacket(ArtNetRecieveData data)
+        public ArtPollPacket(ArtNetReceiveData data)
             : base(data)
         {
 

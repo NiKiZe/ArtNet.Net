@@ -16,7 +16,7 @@ namespace ArtNet.Packets
             OpCode = opCode;
         }
 
-        public ArtNetPacket(ArtNetRecieveData data)
+        public ArtNetPacket(ArtNetReceiveData data)
         {
             ArtNetBinaryReader packetReader = new ArtNetBinaryReader(new MemoryStream(data.buffer));
             ReadData(packetReader);
@@ -86,7 +86,7 @@ namespace ArtNet.Packets
 
         }
 
-        public static ArtNetPacket Create(ArtNetRecieveData data)
+        public static ArtNetPacket Create(ArtNetReceiveData data)
         {
             switch ((ArtNetOpCodes)data.OpCode)
             {
