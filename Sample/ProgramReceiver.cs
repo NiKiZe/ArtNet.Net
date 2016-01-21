@@ -37,7 +37,7 @@ namespace Sample
                     {
                         if (packet.DmxData[i] != 0)
                         {
-                            Console.WriteLine(i + " = " + packet.DmxData[i]);
+                            Console.WriteLine(DateTime.Now.ToString() + " " + i + " = " + packet.DmxData[i]);
                         }
 
                     };
