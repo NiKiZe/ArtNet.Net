@@ -10,6 +10,7 @@ namespace Sample
     class MainClass
     {
         public const uint SENDER_FPS = 40; // iterations per second
+        public const uint SENDER_LENGTH = 512; // number of bytes to send
         public static byte[] dmxData = new byte[511];
         public static ArtNetSocket artnet = new ArtNetSocket();
 
@@ -30,10 +31,15 @@ namespace Sample
         {
             ArtNetDmxPacket toSend = new ArtNetDmxPacket();
             Random rnd = new Random();
+            toSend.Universe = 0; //(short)rnd.Next(0, 500);
 
-            toSend.DmxData = new byte[] { (byte)(rnd.Next(0, 255)), (byte)(rnd.Next(0, 255)), (byte)(rnd.Next(0, 255)) };
+            toSend.DmxData = new byte[SENDER_LENGTH];
+            for (int i = 0; i < SENDER_LENGTH; i++ )
+            {
+                toSend.DmxData[i] = (byte)rnd.Next(0, 255);
+            }
             artnet.Send(toSend);
-            Console.WriteLine("Sending Art-Net data: " + toSend.DmxData[0] + " " + toSend.DmxData[1] + " " + toSend.DmxData[2]);
+            Console.WriteLine("Sending [" + toSend.DmxData.Length + "] values Art-Net data on universe [" + toSend.Universe + "]");
         }
     }
 }

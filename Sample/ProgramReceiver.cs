@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Drawing;
 using System.Net;
 using ArtNet.Sockets;
 using ArtNet.Packets;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Runtime.InteropServices;
 
 namespace Sample
 {
     class MainClass
     {
         public static byte[] dmxData = new byte[511];
+        public const uint MAX_SUPPORTED_UNIVERSES = 512;
+        public static int s_currentIndex = 0;
 
         public static void Main(string[] args)
         {
@@ -27,7 +33,7 @@ namespace Sample
             if (e.Packet.OpCode == ArtNet.Enums.ArtNetOpCodes.Dmx)
             {
                 var packet = e.Packet as ArtNet.Packets.ArtNetDmxPacket;
-                Console.Clear();
+                //Console.Clear();
 
                 if (packet.DmxData != dmxData)
                 {
@@ -39,9 +45,33 @@ namespace Sample
                         {
                             Console.WriteLine(DateTime.Now.ToString() + " " + i + " = " + packet.DmxData[i]);
                         }
-
                     };
                     dmxData = packet.DmxData;
+
+                    // Initialize the byte array with zeros
+                    var byteArray = new byte[MAX_SUPPORTED_UNIVERSES * 512];
+                    for (int i = 0; i < byteArray.Length; i++)
+                    {
+                        byteArray[i] = 0;
+                    }
+                    // Populate with incoming dmx Data
+                    for (int i = 0; i < packet.DmxData.Length; i++)
+                    {
+                        byteArray[i] = packet.DmxData[i];
+                    }
+
+                    // Generate an image
+                    DirectoryInfo di = new DirectoryInfo(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\sequence");
+                    if (!di.Exists)
+                    {
+                        di.Create();
+                    }
+                    string fileNameNoExt = "ImageSequence_" + s_currentIndex.ToString("D8");
+                    FileInfo fi = new FileInfo(di.FullName + "\\" + fileNameNoExt + ".png");
+                    var im = new Bitmap(512, (int)MAX_SUPPORTED_UNIVERSES, 512, PixelFormat.Format8bppIndexed, Marshal.UnsafeAddrOfPinnedArrayElement(byteArray, 0));
+                    im.Save(fi.FullName, ImageFormat.Png);
+
+                    s_currentIndex++;
                 }
             }
         }
